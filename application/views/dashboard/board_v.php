@@ -1,15 +1,6 @@
 <link rel="stylesheet" href="<?= base_url('assets'); ?>/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 <div class="container-xxl flex-grow-1 container-p-y">
-
-
-
     <div class="content-wrapper">
-
-
-
-        <!-- PROTOTYPE  -->
-
-
         <div class="row">
             <div class="col-8">
                 <div class="d-flex gap-2 justify-content-between mb-1">
@@ -32,7 +23,7 @@
                 <div class="row border-bottom border-1">
 
                     <div class="col-xl-4 col-6 mb-4 ">
-                        <div class="card border-success" style="border-bottom:4px solid;">
+                        <div class="card" style="border-bottom:4px rgba(40, 199, 111, 0.5) solid;">
                             <div class="card-body ">
                                 <div class="badge p-2 bg-label-success mb-2 rounded">
                                     <i class="ti ti-clipboard-text"></i>
@@ -46,7 +37,7 @@
                         </div>
                     </div>
                     <div class="col-xl-4 col-6 mb-4 ">
-                        <div class="card border-warning" style="border-bottom:4px solid;">
+                        <div class="card" style="border-bottom:4px rgba(255, 159, 67, 0.5) solid;">
                             <div class="card-body ">
                                 <div class="badge p-2 bg-label-warning mb-2 rounded">
                                     <i class="ti ti-clipboard-list"></i>
@@ -60,7 +51,7 @@
                         </div>
                     </div>
                     <div class="col-xl-4 col-6 mb-4 ">
-                        <div class="card border-danger" style="border-bottom:4px solid;">
+                        <div class="card" style="border-bottom:4px rgba(234, 84, 85, 0.5) solid;">
                             <div class="card-body ">
                                 <div class="badge p-2 bg-label-danger mb-2 rounded">
                                     <i class="ti ti-checklist"></i>
@@ -151,7 +142,11 @@
                                                         <i class="ti ti-dots-vertical"></i>
                                                     </a>
                                                     <ul class="dropdown-menu">
-
+                                                        <li><a class="dropdown-item"
+                                                                href="<?= base_url('/dashboard_c/update_stage_task/') . $t->INT_TASK_ID; ?>">Start</a>
+                                                        </li>
+                                                        <li><a class="dropdown-item" href="javascript:void(0);">Edit</a>
+                                                        </li>
                                                         <li><a class="dropdown-item"
                                                                 href="<?= base_url('/dashboard_c/delete_task/') . $t->INT_TASK_ID; ?>">Delete</a>
                                                         </li>
@@ -210,7 +205,11 @@
                                                         <i class="ti ti-dots-vertical"></i>
                                                     </a>
                                                     <ul class="dropdown-menu">
-
+                                                        <li><a class="dropdown-item"
+                                                                href="<?= base_url('/dashboard_c/update_stage_task/') . $t->INT_TASK_ID; ?>">Complete</a>
+                                                        </li>
+                                                        <li><a class="dropdown-item" href="javascript:void(0);">Edit</a>
+                                                        </li>
                                                         <li><a class="dropdown-item"
                                                                 href="<?= base_url('/dashboard_c/delete_task/') . $t->INT_TASK_ID; ?>">Delete</a>
                                                         </li>
@@ -289,16 +288,17 @@
                 </div>
             </div>
             <div class="col-4 ">
-                <h4 class="m-0 mb-2 text-center">Newest Tasks</h4>
-                <div class="tab-content pt-2 bg-transparent overflow-auto vertical-scroll" style="height:98vh;"
+                <h4 class="m-0 mb-2 text-center">Active tasks</h4>
+                <div class="tab-content pt-0 mt-3 bg-transparent overflow-auto vertical-scroll" style="max-height:98vh;"
                     id='vertical'>
                     <?php $index=0; ?>
                     <?php foreach ($tasks as $t): ?>
-                    <?php if ($t->CHR_STATUS == 0 && $index < 5) : ?>
+                    <?php if ($t->CHR_STATUS == 1 && $index < 6) : ?>
                     <div class="col-12 col-md-12">
 
 
-                        <div class="card card-action mb-3 border border-1 bg-primary text-white">
+                        <div class="card card-action mb-3 bg-transparent"
+                            style="border: solid rgba(115, 103, 240, 0.4) 2px;">
                             <div class="card-header">
                                 <div class="card-action-title fw-bold"><?= $t->CHR_TASK_TITLE; ?></div>
                             </div>
@@ -407,7 +407,7 @@
 
         elements.forEach(function(element) {
             new PerfectScrollbar(element, {
-                wheelPropagation: false,
+                wheelPropagation: true,
                 suppressScrollX: true,
                 wheelSpeed: 0.2,
                 scrollXMarginOffset: 10,
