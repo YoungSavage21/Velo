@@ -5,6 +5,9 @@ class dashboard_c extends CI_Controller
 {
     private $template = 'dashboard/dash_template_v';
     private $home_page = 'dashboard/home_v';
+    private $profile_page = 'dashboard/profile_v';
+    private $account_page = 'dashboard/account_settings_v';
+    private $security_page = 'dashboard/account_security_v';
 
 
     public function __construct()
@@ -13,7 +16,7 @@ class dashboard_c extends CI_Controller
         $this->load->library('form_validation');
         $this->load->model('user_m');
         
-        if (!$this->session->userdata('user-id'))
+        if (!$this->session->userdata('user_session'))
         {
             redirect('login_c/logout');
         }
@@ -24,23 +27,60 @@ class dashboard_c extends CI_Controller
         $data = [
             'title' => 'Home Page',
             'content' => $this->home_page,
-            'session' => $this->session->all_userdata(),
+            'session' => $this->session->userdata('user_session'),
         ];
         $this->load->view($this->template, $data);
     }
 
     public function board_view()
     {
+        $session = $this->session->userdata('user_session');
         $data = [
             'title' => 'Board',
             'content' => 'dashboard/board_v',
-            'session' => $this->session->all_userdata(),
-            'tasks' => $this->user_m->get_user_task($this->session->userdata('user-id')),
-            'tasks_status_count' => $this->user_m->get_tasks_status_count($this->session->userdata('user-id'))
+            'session' => $session,
+            'tasks' => $this->user_m->get_user_task($session['user-id']),
+            'tasks_status_count' => $this->user_m->get_tasks_status_count($session['user-id'])
         ];
-        // var_dump(count($data['tasks']));
-        // var_dump($data['tasks_status_count']['completed']);
-        // var_dump(round($data['tasks_status_count']['completed']/count($data['tasks'])));die;
+        $this->load->view($this->template, $data);
+    }
+
+    public function profile_view()
+    {
+        $session = $this->session->userdata('user_session');
+        $date = new DateTime($this->user_m->get_user_data($session['user-id'])->CHR_DATE_CREATED);
+        $data = [
+            'title' => 'Profile',
+            'content' => $this->profile_page,
+            'session' => $session,
+            'tasks' => $this->user_m->get_user_task($session['user-id']),
+            'tasks_status_count' => $this->user_m->get_tasks_status_count($session['user-id']),
+            'joined_date' => $date->format('F Y'),
+            'country' => $this->user_m->get_country($session['user-id']),
+        ];
+
+        $this->load->view($this->template, $data);
+    }
+
+    public function account_settings_view()
+    {
+        $data = [
+            'title' => 'Settings',
+            'content' => $this->account_page,
+            'session' => $this->session->userdata('user_session'),
+            'all_country' => $this->user_m->get_all_country(),
+        ];
+        $this->load->view($this->template, $data);
+    }
+
+    public function account_security_view()
+    {
+        $data = [
+            'title' => 'Settings',
+            'content' => $this->security_page,
+            'session' => $this->session->userdata('user_session'),
+            'all_country' => $this->user_m->get_all_country(),
+        ];
         $this->load->view($this->template, $data);
     }
 
@@ -51,7 +91,7 @@ class dashboard_c extends CI_Controller
             'CHR_TASK_DESC' => $this->input->post('task-desc'),
             'CHR_TASK_CATEGORY' => $this->input->post('task-category'),
             'CHR_TASK_TAG_COLOR' => $this->input->post('task-tag'),
-            'INT_USER_ID' => $this->session->userdata('user-id'),
+            'INT_USER_ID' => $this->session->userdata('user_session')['user-id'],
         ];
         $this->user_m->save_task($data);
         redirect('dashboard_c/board_view');
@@ -67,4 +107,103 @@ class dashboard_c extends CI_Controller
         $this->user_m->update_stage_task($id);
         redirect('dashboard_c/board_view');
     }
+
+    public function update_user()
+    {
+        $session = $this->session->userdata('user_session');
+        $id = $session['user-id'];
+        $data = [
+            'INT_USER_ID' => $id,
+            'CHR_USERNAME' => $this->input->post('username'),
+            'CHR_FIRST_NAME' => $this->input->post('firstName'),
+            'CHR_LAST_NAME' => $this->input->post('lastName'),
+            'CHR_EMAIL' => $this->input->post('email'),
+            'CHR_PHONE_NUM' => $this->input->post('phoneNumber'),
+            'CHR_COUNTRY' => $this->input->post('country'),
+        ];
+        $config['upload_path'] = './assets/img/avatars/';
+        $config['allowed_types'] = 'jpg|png';
+        $this->load->library('upload', $config);
+
+        if ($this->upload->do_upload('profile-pic')) {
+            $file = $this->upload->data();
+            if($session['profile'] !== 'default.png')
+            {
+                unlink(FCPATH . 'assets/img/avatars/' . $session['profile']);
+            }
+            $data['CHR_PROFILE_PIC'] = $file['file_name'];
+        } else {
+            $error = $this->upload->display_errors();
+            $upload_errors[] = $error;
+        }
+        $this->user_m->update_user($id, $data);
+        $this->update_session($id);
+        redirect('/dashboard_c/board_view');
+    }
+
+    public function update_session($id)
+    {
+        $check = $this->user_m->get_user_data($id);
+        $this->session->set_userdata('user_session', [
+            'user-id' => $check->INT_USER_ID,
+            'username' => $check->CHR_USERNAME,
+            'first-name' => $check->CHR_FIRST_NAME,
+            'last-name' => $check->CHR_LAST_NAME,
+            'email' => $check->CHR_EMAIL,
+            'phone' => $check->CHR_PHONE_NUM,
+            'country' => $check->CHR_COUNTRY,
+            'profile' => $check->CHR_PROFILE_PIC
+        ]);
+    }
+    
+    public function update_password()
+    {
+        $current_password = $this->input->post('currentPassword');
+        $new_password = $this->input->post('newPassword');
+        $confirm_password = $this->input->post('confirmPassword');
+
+        $session = $this->session->userdata('user_session');
+        $user_data = $this->user_m->get_user_data($session['user-id']);
+        
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('currentPassword', 'current password', 'required');
+        $this->form_validation->set_rules('newPassword', 'new password', 'trim|required|min_length[8]|regex_match[/[A-Z]/]|regex_match[/[0-9]/]', [
+            'min_length' => 'Password must be at least 8 characters',
+           'regex_match' => 'Password must contain at least one number and one uppercase letter'
+        ]);
+        $this->form_validation->set_rules('confirmPassword', 'confirm password', 'required|matches[newPassword]', [
+            'matches' => "Password don't match"
+        ]);
+
+        if ($this->form_validation->run() == TRUE)
+        {
+            if ($user_data->CHR_PASSWORD == $new_password) {
+                $this->session->set_flashdata('password_failed', "Password can't be the same as previous one!");
+                redirect('/dashboard_c/account_security_view');
+
+            } elseif ($user_data->CHR_PASSWORD == $current_password) {
+                $data = [
+                    'CHR_PASSWORD' => $new_password,
+                ];
+                $this->user_m->update_user($session['user-id'], $data);
+                $this->session->set_flashdata('password_success', "Password changed successfully!");
+                redirect('/dashboard_c/account_security_view');
+                
+            } else {
+                $this->session->set_flashdata('password_failed', "Current password is incorrect. Please try again!");
+                redirect('/dashboard_c/account_security_view');
+
+            }
+        } else {
+            $data = [
+                'title' => 'Settings',
+                'content' => $this->security_page,
+                'session' => $this->session->userdata('user_session'),
+                'all_country' => $this->user_m->get_all_country(),
+            ];
+            $this->load->view($this->template, $data);
+        }
+
+    }
+
 }

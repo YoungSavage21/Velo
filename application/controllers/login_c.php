@@ -46,11 +46,14 @@ class login_c extends CI_Controller
 
                 case $check->CHR_PASSWORD == $password:
                     $this->session->set_flashdata('message_success', 'Login successful');
-                    $this->session->set_userdata([
+                    $this->session->set_userdata('user_session', [
                         'user-id' => $check->INT_USER_ID,
                         'username' => $check->CHR_USERNAME,
                         'first-name' => $check->CHR_FIRST_NAME,
                         'last-name' => $check->CHR_LAST_NAME,
+                        'email' => $check->CHR_EMAIL,
+                        'phone' => $check->CHR_PHONE_NUM,
+                        'country' => $check->CHR_COUNTRY
                     ]);
                     redirect('dashboard_c/home_view');
                     break;

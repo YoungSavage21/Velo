@@ -50,6 +50,9 @@
 
     <!-- Page CSS -->
 
+    <link rel="stylesheet" href="<?= base_url('assets'); ?>/vendor/css/pages/page-profile.css" />
+    <link rel="stylesheet" href="<?= base_url('assets'); ?>/vendor/css/pages/page-account-settings.css" />
+
     <!-- Helpers -->
     <script src="<?= base_url('assets'); ?>/vendor/js/helpers.js"></script>
 
@@ -113,6 +116,26 @@
                         <a href="<?= base_url('dashboard_c/board_view'); ?>" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-checklist"></i>
                             <div>Board</div>
+                        </a>
+                    </li>
+                    <li
+                        class="menu-item <?php if ($_SERVER['REQUEST_URI'] == '/Project-Baby/dashboard_c/profile_view') {echo 'active';} ?>">
+                        <a href="<?= base_url('dashboard_c/profile_view'); ?>" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-users"></i>
+                            <div data-i18n="Profile">Profile</div>
+                        </a>
+                    </li>
+                    <li
+                        class="menu-item <?php if ($_SERVER['REQUEST_URI'] == '/Project-Baby/dashboard_c/account_settings_view') {echo 'active';} ?>">
+                        <a href="<?= base_url('dashboard_c/account_settings_view'); ?>" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-settings"></i>
+                            <div data-i18n="Account">Account</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="<?= base_url('login_c/logout'); ?>" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-logout"></i>
+                            <div data-i18n="Logout">Logout</div>
                         </a>
                     </li>
                 </ul>
@@ -298,8 +321,8 @@
                                                 <div class="d-flex">
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar">
-                                                            <img src="<?= base_url('assets'); ?>/img/avatars/1.png" alt
-                                                                class="h-auto rounded-circle" />
+                                                            <img src="<?= base_url('assets') . '/img/avatars/' . $session['profile'] ; ?>"
+                                                                alt class="h-auto rounded-circle" />
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -531,8 +554,8 @@
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
                                     data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="<?= base_url('assets'); ?>/img/avatars/1.png" alt
-                                            class="h-auto rounded-circle" />
+                                        <img src="<?= base_url('assets') . '/img/avatars/' . $session['profile'] ; ?>"
+                                            alt class="rounded-circle" />
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -541,12 +564,13 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        <img src="<?= base_url('assets'); ?>/img/avatars/1.png" alt
-                                                            class="h-auto rounded-circle" />
+                                                        <img src="<?= base_url('assets') . '/img/avatars/' . $session['profile'] ; ?>"
+                                                            alt class="rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <span class="fw-semibold d-block">John Doe</span>
+                                                    <span
+                                                        class="fw-semibold d-block"><?= $session['first-name'] . ' ' . $session['last-name'] ?></span>
                                                     <small class="text-muted">Admin</small>
                                                 </div>
                                             </div>
@@ -702,5 +726,25 @@
     <script src="<?= base_url('assets'); ?>/js/dashboards-ecommerce.js"></script>
     <script src="<?= base_url('assets'); ?>/js/cards-actions.js"></script>
 </body>
+<script>
+$(document).ready(function() {
+    $('#upload').on('change', function() {
+        let file = this.files[0];
+        const reader = new FileReader();
+        if (file) {
+            reader.readAsDataURL(file);
+            reader.onload = function(e) {
+                $('#uploadedAvatar').attr('src', e.target.result);
+                $('#profileNote').html(file['name']);
+            };
+        } else {
+            $('#uploadedAvatar').attr('src',
+                '<?php echo base_url("assets/img/avatars/") . $session["profile"]; ?>');
+            $('#profileNote').html('Allowed JPG, GIF or PNG. Max size of 800K');
+            console.log('test');
+        }
+    });
+});
+</script>
 
 </html>

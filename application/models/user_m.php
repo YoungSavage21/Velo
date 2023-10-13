@@ -7,6 +7,7 @@ class user_m extends CI_Model {
 
     private $tm_user = 'TM_USER';
     private $tt_task = 'TT_TASK';
+    private $tm_country = 'TM_COUNTRY';
 
     function register_user($data)
     {
@@ -16,6 +17,12 @@ class user_m extends CI_Model {
     function authenticate($username)
     {
         $check = $this->db->get_where($this->tm_user, ['CHR_USERNAME' => $username])->row();
+        return $check;
+    }
+
+    function get_user_data($id)
+    {
+        $check = $this->db->get_where($this->tm_user, ['INT_USER_ID' => $id])->row();
         return $check;
     }
 
@@ -76,6 +83,24 @@ class user_m extends CI_Model {
         }
         
         return $data;
+    }
+
+    public function get_all_country()
+    {
+        $data = $this->db->get($this->tm_country)->result_array();
+        return $data;
+    }
+
+    public function get_country($country_id)
+    {
+        $data = $this->db->get_where($this->tm_country, ['CHR_COUNTRY_ID' => $country_id])->row_array();
+        return $data;
+    }
+
+    public function update_user($id, $data)
+    {
+        $this->db->where(['INT_USER_ID' => $id])
+         ->update($this->tm_user, $data);
     }
 }
     
