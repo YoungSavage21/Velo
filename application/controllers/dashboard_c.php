@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class dashboard_c extends CI_Controller
+class Dashboard_c extends CI_Controller
 {
     private $template = 'dashboard/dash_template_v';
     private $home_page = 'dashboard/home_v';
@@ -42,6 +42,36 @@ class dashboard_c extends CI_Controller
             'tasks' => $this->user_m->get_user_task($session['user-id']),
             'tasks_status_count' => $this->user_m->get_tasks_status_count($session['user-id'])
         ];
+        // var_dump($data['tasks']);die;
+        $this->load->view($this->template, $data);
+    }
+
+    function process_task($id)
+    {
+        $tasks = $this->user_m->get_user_task($id);
+        $n = 0;
+        foreach ($tasks as &$key) {
+            $col = explode(',', $key->COL_ID);
+            $key->COL_ID = [];
+            foreach ($col as $c)
+            {
+                $key->COL_ID[] = $this->user_m->get_user_info($c);
+            }
+        }
+        return $tasks;
+    }
+
+    public function kanban_view()
+    {
+        date_default_timezone_set("Asia/Jakarta");
+        $session = $this->session->userdata('user_session');
+        
+        $data = [
+            'title' => 'Board',
+            'content' => 'dashboard/kanban_v',
+            'session' => $session,
+            'tasks' => $this->process_task($session['user-id']),
+        ];
         $this->load->view($this->template, $data);
     }
 
@@ -56,9 +86,8 @@ class dashboard_c extends CI_Controller
             'tasks' => $this->user_m->get_user_task($session['user-id']),
             'tasks_status_count' => $this->user_m->get_tasks_status_count($session['user-id']),
             'joined_date' => $date->format('F Y'),
-            'country' => $this->user_m->get_country($session['user-id']),
+            'country' => $this->user_m->get_country($session['country']),
         ];
-
         $this->load->view($this->template, $data);
     }
 
@@ -91,15 +120,33 @@ class dashboard_c extends CI_Controller
             'CHR_TASK_DESC' => $this->input->post('task-desc'),
             'CHR_TASK_CATEGORY' => $this->input->post('task-category'),
             'CHR_TASK_TAG_COLOR' => $this->input->post('task-tag'),
+            'CHR_STATUS' => $this->input->post('CHR_STATUS'),
             'INT_USER_ID' => $this->session->userdata('user_session')['user-id'],
+            'INT_CREATED_BY' => $this->session->userdata('user_session')['user-id'],
+            'DAT_DUE_DATE' => $this->input->post('due-date'),
         ];
-        $this->user_m->save_task($data);
-        redirect('dashboard_c/board_view');
+        $config['upload_path'] = './assets/img/upload/';
+        $config['allowed_types'] = 'jpg|png';
+        $this->load->library('upload', $config);
+
+        if ($this->upload->do_upload('image')) {
+            $file = $this->upload->data();
+            $data['CHR_IMAGE'] = $file['file_name'];
+        } else {
+            $error = $this->upload->display_errors();
+            $upload_errors[] = $error;
+        }
+        $assigned = $this->input->post('assigned');
+        // var_dump($data, $assigned);die;
+        $this->user_m->save_task($data, $assigned);
+        redirect('dashboard_c/kanban_view');
     }
     public function delete_task($id)
     {
+        $image = $this->user_m->get_image_by_id($id);
+        unlink(FCPATH . 'assets/img/upload/' . $image->CHR_IMAGE);
         $this->user_m->delete_task($id);
-        redirect('dashboard_c/board_view');
+        redirect('dashboard_c/kanban_view');
     }
 
     public function update_stage_task($id)
@@ -206,4 +253,18 @@ class dashboard_c extends CI_Controller
 
     }
 
+    public function edit_status()
+    {
+        $id = $this->input->post('id');
+        $target = $this->input->post('target');
+
+        $this->user_m->edit_status($id, $target);
+    }
+
+    public function add_member()
+    {
+        $username = $this->input->post('username');
+        $data = $this->user_m->get_data_by_username($username);
+        echo json_encode($data);
+    }
 }

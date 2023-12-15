@@ -1,13 +1,14 @@
 <?php
 
-class user_m extends CI_Model {
+class User_m extends CI_Model {
     function __construct() {
         parent::__construct();
     }
 
-    private $tm_user = 'TM_USER';
-    private $tt_task = 'TT_TASK';
-    private $tm_country = 'TM_COUNTRY';
+    private $tm_user = 'tm_user';
+    private $tt_task = 'tt_task';
+    private $tm_country = 'tm_country';
+    private $tt_col = 'tt_collaborate';
 
     function register_user($data)
     {
@@ -28,18 +29,40 @@ class user_m extends CI_Model {
 
     function get_user_task($id)
     {
-        $tasks = $this->db->select('*')
-        ->from($this->tt_task)
-        ->where('INT_USER_ID', $id)
-        ->order_by('CHR_MODIFIED_DATE', 'DESC')
-        ->get()
-        ->result();
+        $tasks = $this->db->query("
+        SELECT *
+        FROM (
+            SELECT `tt_task`.*, GROUP_CONCAT(`tt_collaborate`.`INT_USER_ID`) AS `COL_ID`
+            FROM `tt_collaborate`
+            JOIN `tt_task` ON `tt_task`.`INT_TASK_ID` = `tt_collaborate`.`INT_TASK_ID`
+            GROUP BY `tt_collaborate`.`INT_TASK_ID`
+        ) AS subquery
+        WHERE FIND_IN_SET($id, `COL_ID`)
+        ORDER BY CHR_MODIFIED_DATE DESC
+        ")->result();
+
+        // var_dump($tasks);die;
         return $tasks;
     }
+    // function get_user_task($id)
+    // {
+    //     $tasks = $this->db->select('*')
+    //     ->from($this->tt_task)
+    //     ->where('INT_USER_ID', $id)
+    //     ->order_by('CHR_MODIFIED_DATE', 'DESC')
+    //     ->get()
+    //     ->result();
+    //     return $tasks;
+    // }
 
-    function save_task($data)
+    function save_task($data, $assigned)
     {
         $this->db->insert($this->tt_task, $data);
+        $id = $this->db->insert_id();
+        
+        foreach ($assigned as $key) {
+            $this->db->insert($this->tt_col, ['INT_TASK_ID' => $id, 'INT_USER_ID' => $key]);
+        }
     }
 
     function delete_task($id)
@@ -101,6 +124,42 @@ class user_m extends CI_Model {
     {
         $this->db->where(['INT_USER_ID' => $id])
          ->update($this->tm_user, $data);
+    }
+
+    public function edit_status($id, $target)
+    {
+        $this->db->where(['INT_TASK_ID' => $id])
+        ->update($this->tt_task, ['CHR_STATUS' => $target]);
+    }
+
+    public function get_image_by_id($id)
+    {
+        $image = $this->db->select('CHR_IMAGE')
+        ->from($this->tt_task)
+        ->where('INT_TASK_ID', $id)
+        ->get()
+        ->row();
+        return $image;
+    }
+
+    function get_user_info($id)
+    {
+        $query = $this->db->select('INT_USER_ID, CHR_PROFILE_PIC, CHR_FIRST_NAME')
+        ->from($this->tm_user)
+        ->where('INT_USER_ID', $id)
+        ->get()
+        ->row();
+        return $query;
+    }
+
+    function get_data_by_username($username)
+    {
+        $query = $this->db->select('*')
+        ->from($this->tm_user)
+        ->where('CHR_USERNAME', $username)
+        ->get()
+        ->row();
+        return $query;
     }
 }
     

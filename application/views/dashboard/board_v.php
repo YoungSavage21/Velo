@@ -1,13 +1,13 @@
 <link rel="stylesheet" href="<?= base_url('assets'); ?>/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 <div class="container-xxl flex-grow-1 container-p-y">
-    <div class="content-wrapper overflow-hidden">
+    <div class="content-wrapper">
         <div class="row">
-            <div class="col-8">
+            <div class="col-md-8 col-sm-12">
                 <!-- TOP-LEFT -->
                 <div class="row border-bottom border-1">
 
-                    <div class="col-xl-4 col-6 mb-4">
-                        <div class="card" style="border-bottom:4px rgba(40, 199, 111, 0.5) solid;">
+                    <div class="col-lg-4 col-sm-12 mb-4">
+                        <div class="card" style="border-bottom:2px rgba(40, 199, 111, 0.5) solid;">
                             <div class="card-body">
                                 <div class="div d-flex justify-content-between gap-2">
                                     <span class="pt-2">New Tasks</span>
@@ -23,8 +23,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-4 col-6 mb-4 ">
-                        <div class="card" style="border-bottom:4px rgba(255, 159, 67, 0.5) solid;">
+                    <div class="col-lg-4 col-sm-12 mb-4 ">
+                        <div class="card" style="border-bottom:2px rgba(255, 159, 67, 0.5) solid;">
                             <div class="card-body ">
                                 <div class="div d-flex justify-content-between gap-2">
                                     <span class="pt-2">On Progress</span>
@@ -40,8 +40,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-4 col-6 mb-4 ">
-                        <div class="card" style="border-bottom:4px rgba(234, 84, 85, 0.5) solid;">
+                    <div class="col-lg-4 col-sm-12 mb-4 ">
+                        <div class="card" style="border-bottom:2px rgba(234, 84, 85, 0.5) solid;">
                             <div class="card-body ">
                                 <div class="div d-flex justify-content-between gap-2">
                                     <span class="pt-2">Completed</span>
@@ -58,13 +58,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="d-flex gap-2 align-items-center my-3">
-                    <div class="">
-                        <h4 class="m-0">All Tasks</h4>
-                    </div>
 
-                </div> -->
-                <div class="nav-align-top mt-3">
+                <div class="nav-align-top mt-3 mb-0">
                     <div class="d-flex justify-content-between align-items-start mb-1">
                         <ul class="nav nav-pills mb-3" role="tablist">
                             <li class="nav-item">
@@ -96,23 +91,19 @@
                             <!-- FIRST PANEL  -->
                             <div class="row overflow-auto position-relative vertical-scroll" style="max-height:50vh;">
 
-                                <?php if (empty($tasks)): ?>
+                                <?php if (empty($tasks_status_count['new'])): ?>
                                 <img src="<?= base_url('assets/')?>img/illustrations/tasks.png" style="width: 40%;"
                                     class="m-auto" alt="">
                                 <h3 class="text-center text-primary my-0">Nothing Here</h3>
-                                <p class="text-center mt-1">Start by creating a task!</p>
+                                <p class="text-center mt-1">Start by creating a new task!</p>
                                 <?php endif; ?>
+
                                 <?php foreach ($tasks as $t): ?>
                                 <?php if ($t->CHR_STATUS == 0) : ?>
                                 <div class="col-12 col-md-12">
                                     <div class="card card-action mb-3">
                                         <div class="card-header ">
                                             <div class="card-action-title fw-bold"><?= $t->CHR_TASK_TITLE; ?></div>
-                                            <div class="item-badges">
-                                                <div
-                                                    class="badge rounded-pill py-1 px-2 bg-label-<?= $t->CHR_TASK_TAG_COLOR; ?>">
-                                                    <?= $t->CHR_TASK_CATEGORY; ?></div>
-                                            </div>
                                             <div class="card-action-element">
                                                 <ul class="list-inline mb-0">
                                                     <li class="list-inline-item">
@@ -132,7 +123,11 @@
                                                     <small class='text-muted'>
                                                         <?= date("Y-m-d", strtotime($t->CHR_CREATED_DATE)); ?>
                                                     </small>
-
+                                                    <div class="item-badges">
+                                                        <div
+                                                            class="badge rounded-pill py-1 px-2 bg-label-<?= $t->CHR_TASK_TAG_COLOR; ?>">
+                                                            <?= $t->CHR_TASK_CATEGORY; ?></div>
+                                                    </div>
                                                 </div>
                                                 <div class=" btn-group">
                                                     <a type="button" class="dropdown-toggle hide-arrow"
@@ -163,7 +158,7 @@
                         <div class="tab-pane fade" id="navs-pills-top-on-progress" role="tabpanel">
                             <!-- SECOND PANEL -->
                             <div class="row overflow-auto position-relative vertical-scroll" style="max-height:50vh;">
-                                <?php if (empty($tasks)): ?>
+                                <?php if (empty($tasks_status_count['progress'])): ?>
                                 <img src="<?= base_url('assets/')?>img/illustrations/tasks.png" style="width: 40%;"
                                     class="m-auto" alt="">
                                 <h3 class="text-center text-primary my-0">Nothing Here</h3>
@@ -172,8 +167,6 @@
                                 <?php foreach ($tasks as $t): ?>
                                 <?php if ($t->CHR_STATUS == 1) : ?>
                                 <div class="col-12 col-md-12">
-
-
                                     <div class="card card-action mb-3">
                                         <div class="card-header ">
                                             <div class="card-action-title fw-bold"><?= $t->CHR_TASK_TITLE; ?></div>
@@ -232,7 +225,7 @@
                         <div class="tab-pane fade" id="navs-pills-top-completed" role="tabpanel">
                             <!-- THIRD PANEL  -->
                             <div class="row overflow-auto position-relative vertical-scroll" style="max-height:50vh;">
-                                <?php if (empty($tasks)): ?>
+                                <?php if (empty($tasks_status_count['completed'])): ?>
                                 <img src="<?= base_url('assets/')?>img/illustrations/tasks.png" style="width: 40%;"
                                     class="m-auto" alt="">
                                 <h3 class="text-center text-primary my-0">Nothing Here</h3>
@@ -241,8 +234,6 @@
                                 <?php foreach ($tasks as $t): ?>
                                 <?php if ($t->CHR_STATUS == 2) : ?>
                                 <div class="col-12 col-md-12">
-
-
                                     <div class="card card-action mb-3">
                                         <div class="card-header ">
                                             <div class="card-action-title fw-bold"><?= $t->CHR_TASK_TITLE; ?></div>
@@ -278,7 +269,6 @@
                                                         <i class="ti ti-dots-vertical"></i>
                                                     </a>
                                                     <ul class="dropdown-menu">
-
                                                         <li><a class="dropdown-item"
                                                                 href="<?= base_url('/dashboard_c/delete_task/') . $t->INT_TASK_ID; ?>">Delete</a>
                                                         </li>
@@ -298,13 +288,13 @@
                 </div>
             </div>
 
-            <div class="col-4 ">
+            <div class="col-md-4 col-sm-12">
                 <h4 class="m-0 mb-2 text-center">Active Tasks</h4>
                 <div class="tab-content pt-0 mt-3 bg-transparent overflow-auto vertical-scroll" style="max-height:78vh;"
                     id='vertical'>
                     <hr class="mt-0">
 
-                    <?php if (empty($tasks)): ?>
+                    <?php if (empty($tasks_status_count['progress'])): ?>
                     <img src="<?= base_url('assets/')?>img/illustrations/nothing.png"
                         style="width: 100%; image-rendering: auto;" alt="">
                     <h3 class="text-center text-primary my-0">Nothing Here</h3>

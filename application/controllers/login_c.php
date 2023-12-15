@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class login_c extends CI_Controller
+class Login_c extends CI_Controller
 {
     private $template = 'pages/auth_template_v';
     private $login_page = 'pages/login_v';
@@ -53,7 +53,8 @@ class login_c extends CI_Controller
                         'last-name' => $check->CHR_LAST_NAME,
                         'email' => $check->CHR_EMAIL,
                         'phone' => $check->CHR_PHONE_NUM,
-                        'country' => $check->CHR_COUNTRY
+                        'country' => $check->CHR_COUNTRY,
+                        'profile' => $check->CHR_PROFILE_PIC,
                     ]);
                     redirect('dashboard_c/home_view');
                     break;

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class register_c extends CI_Controller
+class Register_c extends CI_Controller
 {
     private $template = 'pages/auth_template_v';
     private $register_page = 'pages/register_v';
