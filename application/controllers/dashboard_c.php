@@ -126,7 +126,7 @@ class Dashboard_c extends CI_Controller
             'DAT_DUE_DATE' => $this->input->post('due-date'),
         ];
         $config['upload_path'] = './assets/img/upload/';
-        $config['allowed_types'] = 'jpg|png';
+        $config['allowed_types'] = 'jpg|png|jpeg';
         $this->load->library('upload', $config);
 
         if ($this->upload->do_upload('image')) {
@@ -139,14 +139,71 @@ class Dashboard_c extends CI_Controller
         $assigned = $this->input->post('assigned');
         // var_dump($data, $assigned);die;
         $this->user_m->save_task($data, $assigned);
+        $this->session->set_flashdata('alert', array(
+            'color' => 'primary',
+            'message' => '<strong>Success!</strong> Task added successfully.'
+        ));
         redirect('dashboard_c/kanban_view');
     }
-    public function delete_task($id)
+
+    public function edit_task()
     {
-        $image = $this->user_m->get_image_by_id($id);
-        unlink(FCPATH . 'assets/img/upload/' . $image->CHR_IMAGE);
-        $this->user_m->delete_task($id);
+        $id = $this->input->post('INT_TASK_ID');
+        $data = [
+            'CHR_TASK_TITLE' => $this->input->post('task-title'),
+            'CHR_TASK_DESC' => $this->input->post('task-desc'),
+            'CHR_TASK_CATEGORY' => $this->input->post('task-category'),
+            'CHR_TASK_TAG_COLOR' => $this->input->post('task-tag'),
+            'CHR_STATUS' => $this->input->post('CHR_STATUS'),
+            'INT_USER_ID' => $this->session->userdata('user_session')['user-id'],
+            'INT_CREATED_BY' => $this->session->userdata('user_session')['user-id'],
+            'DAT_DUE_DATE' => $this->input->post('due-date'),
+        ];
+        $config['upload_path'] = './assets/img/upload/';
+        $config['allowed_types'] = 'jpg|png|jpeg';
+        $this->load->library('upload', $config);
+
+        if ($this->upload->do_upload('image')) {
+            $current_image = $this->user_m->get_image_by_id($id);
+            if ($current_image) {
+                unlink(FCPATH . 'assets/img/upload/' . $current_image->CHR_IMAGE);
+            }
+            $file = $this->upload->data();
+            $data['CHR_IMAGE'] = $file['file_name'];
+        } else {
+            $error = $this->upload->display_errors();
+            $upload_errors[] = $error;
+        }
+        $assigned = $this->input->post('assigned');
+        // var_dump($data, $assigned, $id);die;
+        $this->user_m->update_task($data, $assigned, $id);
+        $this->session->set_flashdata('alert', array(
+            'color' => 'primary',
+            'message' => '<strong>Success!</strong> Task edited successfully.'
+        ));
         redirect('dashboard_c/kanban_view');
+    }
+
+    public function delete_task($task_id)
+    {
+        $user_id =  $this->session->userdata('user_session')['user-id'];
+        $query = $this->user_m->delete_task($task_id, $user_id);
+        if ($query == 0)
+        {
+            $this->session->set_flashdata('alert', array(
+                'color' => 'primary',
+                'message' => '<strong>Success!</strong> Task deleted successfully.'
+            ));
+            $image = $this->user_m->get_image_by_id($id);
+            unlink(FCPATH . 'assets/img/upload/' . $image->CHR_IMAGE);
+        } else{
+            $this->session->set_flashdata('alert', array(
+                'color' => 'danger',
+                'message' => "<strong>Failed!</strong> You don't have permission to delete this task."
+            ));
+        }
+        redirect('dashboard_c/kanban_view');
+
     }
 
     public function update_stage_task($id)
@@ -168,8 +225,19 @@ class Dashboard_c extends CI_Controller
             'CHR_PHONE_NUM' => $this->input->post('phoneNumber'),
             'CHR_COUNTRY' => $this->input->post('country'),
         ];
+
+        $this->user_m->update_user($id, $data);
+        $this->update_session($id);
+        redirect('/dashboard_c/account_settings_view');
+    }
+
+    public function update_profile_pic()
+    {
+        $session = $this->session->userdata('user_session');
+        $id = $session['user-id'];
+        $data = [];
         $config['upload_path'] = './assets/img/avatars/';
-        $config['allowed_types'] = 'jpg|png';
+        $config['allowed_types'] = '*';
         $this->load->library('upload', $config);
 
         if ($this->upload->do_upload('profile-pic')) {
@@ -183,9 +251,9 @@ class Dashboard_c extends CI_Controller
             $error = $this->upload->display_errors();
             $upload_errors[] = $error;
         }
-        $this->user_m->update_user($id, $data);
+        $this->user_m->update_user_pic($id, $data);
         $this->update_session($id);
-        redirect('/dashboard_c/board_view');
+        echo json_encode('Success');
     }
 
     public function update_session($id)
@@ -267,4 +335,12 @@ class Dashboard_c extends CI_Controller
         $data = $this->user_m->get_data_by_username($username);
         echo json_encode($data);
     }
+
+    public function get_task_by_id()
+    {
+        $id = $this->input->post('INT_TASK_ID');
+        $data = $this->user_m->get_task_by_id($id);
+        $data->FORMATED_DATE = date("Y-m-d", strtotime($data->DAT_DUE_DATE));
+        echo json_encode($data);
+}
 }

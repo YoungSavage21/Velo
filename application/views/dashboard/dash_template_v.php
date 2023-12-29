@@ -48,8 +48,8 @@
     <link rel="stylesheet" href="<?= base_url('assets'); ?>/vendor/libs/spinkit/spinkit.css" />
     <link rel="stylesheet" href="<?= base_url('assets'); ?>/vendor/libs/jkanban/jkanban.css" />
     <link rel="stylesheet" href="<?= base_url('assets'); ?>/vendor/libs/select2/select2.css " />
-
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.6.6/dragula.css" />
+    <link rel="stylesheet" href="<?= base_url('assets'); ?>/vendor/libs/cropperjs/cropper.css " />
 
 
     <!-- Page CSS -->
@@ -461,6 +461,8 @@
     <script src="<?= base_url('assets'); ?>/vendor/libs/block-ui/block-ui.js"></script>
     <script src="<?= base_url('assets'); ?>/vendor/libs/sortablejs/sortable.js"></script>
     <script src="<?= base_url('assets'); ?>/vendor/libs/select2/select2.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/dragula/3.6.6/dragula.min.js'></script>
+    <script src="<?= base_url('assets'); ?>/vendor/libs/cropperjs/cropper.js"></script>
 
     <!-- Main JS -->
     <script src="<?= base_url('assets'); ?>/js/main.js"></script>
@@ -470,25 +472,5 @@
     <script src="<?= base_url('assets'); ?>/js/cards-actions.js"></script>
 
 </body>
-<script>
-$(document).ready(function() {
-    $('#upload').on('change', function() {
-        let file = this.files[0];
-        const reader = new FileReader();
-        if (file) {
-            reader.readAsDataURL(file);
-            reader.onload = function(e) {
-                $('#uploadedAvatar').attr('src', e.target.result);
-                $('#profileNote').html(file['name']);
-            };
-        } else {
-            $('#uploadedAvatar').attr('src',
-                '<?php echo base_url("assets/img/avatars/") . $session["profile"]; ?>');
-            $('#profileNote').html('Allowed JPG, GIF or PNG. Max size of 800K');
-            console.log('test');
-        }
-    });
-});
-</script>
 
 </html>

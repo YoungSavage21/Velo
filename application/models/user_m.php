@@ -32,7 +32,7 @@ class User_m extends CI_Model {
         $tasks = $this->db->query("
         SELECT *
         FROM (
-            SELECT `tt_task`.*, GROUP_CONCAT(`tt_collaborate`.`INT_USER_ID`) AS `COL_ID`
+            SELECT `tt_task`.*, GROUP_CONCAT(`tt_collaborate`.`INT_USER_ID` ORDER BY `tt_collaborate`.`INT_ID` ASC) AS `COL_ID`
             FROM `tt_collaborate`
             JOIN `tt_task` ON `tt_task`.`INT_TASK_ID` = `tt_collaborate`.`INT_TASK_ID`
             GROUP BY `tt_collaborate`.`INT_TASK_ID`
@@ -41,19 +41,8 @@ class User_m extends CI_Model {
         ORDER BY CHR_MODIFIED_DATE DESC
         ")->result();
 
-        // var_dump($tasks);die;
         return $tasks;
     }
-    // function get_user_task($id)
-    // {
-    //     $tasks = $this->db->select('*')
-    //     ->from($this->tt_task)
-    //     ->where('INT_USER_ID', $id)
-    //     ->order_by('CHR_MODIFIED_DATE', 'DESC')
-    //     ->get()
-    //     ->result();
-    //     return $tasks;
-    // }
 
     function save_task($data, $assigned)
     {
@@ -65,9 +54,32 @@ class User_m extends CI_Model {
         }
     }
 
-    function delete_task($id)
+    function update_task($data, $assigned, $id)
     {
-        $this->db->delete($this->tt_task, ['INT_TASK_ID' => $id]);
+        $this->db->where(['INT_TASK_ID' => $id])
+        ->update($this->tt_task, $data);
+        $this->db->where(['INT_TASK_ID' => $id])
+        ->delete($this->tt_col);
+
+        foreach ($assigned as $key) {
+            $this->db->insert($this->tt_col, ['INT_TASK_ID' => $id, 'INT_USER_ID' => $key]);
+        }
+    }
+
+    function delete_task($task_id, $user_id)
+    {
+        $query = $this->db->select('INT_USER_ID')
+        ->from($this->tt_task)
+        ->where('INT_TASK_ID', $task_id)
+        ->get()
+        ->row();
+
+        if ($query->INT_USER_ID == $user_id) {
+            return 0;
+            $this->db->delete($this->tt_task, ['INT_TASK_ID' => $task_id]);
+        } else {
+            return 1;
+        }
     }
 
     function update_stage_task($id)
@@ -75,37 +87,6 @@ class User_m extends CI_Model {
         $this->db->where(['INT_TASK_ID' => $id])
          ->set('CHR_STATUS', 'CHR_STATUS + 1', FALSE)
          ->update($this->tt_task);
-    }
-
-    function get_tasks_status_count($id)
-    {
-        $tasks = $this->get_user_task($id);
-    
-        $data = [
-            'new' => 0,
-            'progress' => 0,
-            'completed' => 0,
-        ];
-        
-        $statusArray = array_column($tasks, 'CHR_STATUS');
-        
-        $statusCounts = array_count_values($statusArray);
-        
-        foreach ($statusCounts as $status => $count) {
-            switch ($status) {
-                case 0:
-                    $data['new'] = $count;
-                    break;
-                case 1:
-                    $data['progress'] = $count;
-                    break;
-                case 2:
-                    $data['completed'] = $count;
-                    break;
-            }
-        }
-        
-        return $data;
     }
 
     public function get_all_country()
@@ -124,6 +105,13 @@ class User_m extends CI_Model {
     {
         $this->db->where(['INT_USER_ID' => $id])
          ->update($this->tm_user, $data);
+    }
+
+    public function update_user_pic($id, $data)
+    {
+        $this->db->set($data)
+         ->where(['INT_USER_ID' => $id])
+         ->update($this->tm_user);
     }
 
     public function edit_status($id, $target)
@@ -160,6 +148,47 @@ class User_m extends CI_Model {
         ->get()
         ->row();
         return $query;
+    }
+
+    function get_task_by_id($id)
+    {
+        $query = $this->db->select('*')
+        ->from($this->tt_task)
+        ->where('INT_TASK_ID', $id)
+        ->get()
+        ->row();
+        return $query;
+    }
+
+    function get_tasks_status_count($id)
+    {
+        $tasks = $this->get_user_task($id);
+    
+        $data = [
+            'new' => 0,
+            'progress' => 0,
+            'completed' => 0,
+        ];
+        
+        $statusArray = array_column($tasks, 'CHR_STATUS');
+        
+        $statusCounts = array_count_values($statusArray);
+        
+        foreach ($statusCounts as $status => $count) {
+            switch ($status) {
+                case 0:
+                    $data['new'] = $count;
+                    break;
+                case 1:
+                    $data['progress'] = $count;
+                    break;
+                case 2:
+                    $data['completed'] = $count;
+                    break;
+            }
+        }
+        
+        return $data;
     }
 }
     
