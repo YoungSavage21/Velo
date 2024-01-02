@@ -24,7 +24,7 @@
                                 alt="user-avatar" class="d-block w-px-100 h-px-100 rounded" id="uploadedAvatar" />
                             <div class="button-wrapper">
                                 <label for="upload" class="btn btn-primary me-2 mb-3" tabindex="0">
-                                    <span class="d-none d-sm-block">Upload new photo</span>
+                                    <span class="d-none d-sm-block">Upload New Photo</span>
                                     <i class="ti ti-upload d-block d-sm-none"></i>
                                     <input type="file" id="upload" class="account-file-input" hidden
                                         accept="image/png, image/jpeg" name="profile-pic" />
@@ -85,8 +85,7 @@
                         </div>
                     </div>
                     <div class="mt-2">
-                        <button type="submit" class="btn btn-primary me-2">Save changes</button>
-                        <button type="reset" class="btn btn-label-secondary">Cancel</button>
+                        <button type="submit" class="btn btn-primary me-2">Save Changes</button>
                     </div>
                     </form>
                 </div>
@@ -136,7 +135,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="cropButton">Crop</button>
+                <button type="button" class="btn btn-primary" id="cropButton">Save</button>
             </div>
         </div>
     </div>
