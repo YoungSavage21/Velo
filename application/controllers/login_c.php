@@ -99,7 +99,7 @@ class Login_c extends CI_Controller
         $config = json_decode(file_get_contents(FCPATH . 'application/controllers/config.json' ), true);
         $config = [
             'protocol' => 'smtp',
-            'smtp_host' => 'smtp.googlemail.com',
+            'smtp_host' => 'ssl://smtp.googlemail.com',
             'smtp_user' => 'gilangp.nurdiansyah@gmail.com',
             'smtp_pass' => $config['smtp_pass'],
             'smtp_port' => 465,

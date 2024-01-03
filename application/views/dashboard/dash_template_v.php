@@ -165,32 +165,46 @@
                     </div>
 
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-                        <!-- Search -->
+                        <!-- Logo -->
                         <div class="navbar-nav align-items-center">
-                            <div class="nav-item navbar-search-wrapper mb-0">
-                                <a class="nav-item nav-link search-toggler d-flex align-items-center px-0"
-                                    href="javascript:void(0);">
-                                    <i class="ti ti-search ti-md me-2"></i>
-                                    <span class="d-none d-md-inline-block text-muted">Search (Ctrl+/)</span>
+                            <div class="app-brand demo">
+                                <a href="<?= base_url('dashboard_c/home_view'); ?>" class="app-brand-link">
+                                    <span class="app-brand-logo demo">
+                                        <svg width="32" height="22" viewBox="0 0 32 22" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M0.00172773 0V6.85398C0.00172773 6.85398 -0.133178 9.01207 1.98092 10.8388L13.6912 21.9964L19.7809 21.9181L18.8042 9.88248L16.4951 7.17289L9.23799 0H0.00172773Z"
+                                                fill="#7367F0" />
+                                            <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M7.69824 16.4364L12.5199 3.23696L16.5541 7.25596L7.69824 16.4364Z"
+                                                fill="#161616" />
+                                            <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M8.07751 15.9175L13.9419 4.63989L16.5849 7.28475L8.07751 15.9175Z"
+                                                fill="#161616" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z"
+                                                fill="#7367F0" />
+                                        </svg>
+                                    </span>
                                 </a>
                             </div>
                         </div>
-                        <!-- /Search -->
+                        <!-- /Logo -->
 
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
                             <!-- Language -->
-                            <li class="nav-item dropdown-language dropdown me-2 me-xl-0">
+                            <!-- <li class="nav-item dropdown-language dropdown me-2 me-xl-0">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
                                     data-bs-toggle="dropdown">
                                     <i class="fi fi-us fis rounded-circle me-1 fs-3"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    <li>
-                                        <a class="dropdown-item" href="javascript:void(0);" data-language="en">
-                                            <i class="fi fi-us fis rounded-circle me-1 fs-3"></i>
-                                            <span class="align-middle">English</span>
-                                        </a>
-                                    </li>
+                                    <li> -->
+                            <span class="dropdown-item" href="javascript:void(0);" data-language="en">
+                                <i class="fi fi-us fis rounded-circle me-1 fs-3"></i>
+                                <!-- <span class="align-middle">English</span> -->
+                            </span>
+                            <!-- </li>
                                     <li>
                                         <a class="dropdown-item" href="javascript:void(0);" data-language="fr">
                                             <i class="fi fi-fr fis rounded-circle me-1 fs-3"></i>
@@ -210,7 +224,7 @@
                                         </a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li> -->
                             <!--/ Language -->
 
                             <!-- Style Switcher -->
@@ -220,94 +234,6 @@
                                 </a>
                             </li>
                             <!--/ Style Switcher -->
-
-                            <!-- Quick links  -->
-                            <li class="nav-item dropdown-shortcuts navbar-dropdown dropdown me-2 me-xl-0">
-                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
-                                    data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
-                                    <i class="ti ti-layout-grid-add ti-md"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end py-0">
-                                    <div class="dropdown-menu-header border-bottom">
-                                        <div class="dropdown-header d-flex align-items-center py-3">
-                                            <h5 class="text-body mb-0 me-auto">Shortcuts</h5>
-                                            <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body"
-                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                title="Add shortcuts"><i class="ti ti-sm ti-apps"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="dropdown-shortcuts-list scrollable-container">
-                                        <div class="row row-bordered overflow-visible g-0">
-                                            <div class="dropdown-shortcuts-item col">
-                                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-                                                    <i class="ti ti-calendar fs-4"></i>
-                                                </span>
-                                                <a href="app-calendar.html" class="stretched-link">Calendar</a>
-                                                <small class="text-muted mb-0">Appointments</small>
-                                            </div>
-                                            <div class="dropdown-shortcuts-item col">
-                                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-                                                    <i class="ti ti-file-invoice fs-4"></i>
-                                                </span>
-                                                <a href="app-invoice-list.html" class="stretched-link">Invoice App</a>
-                                                <small class="text-muted mb-0">Manage Accounts</small>
-                                            </div>
-                                        </div>
-                                        <div class="row row-bordered overflow-visible g-0">
-                                            <div class="dropdown-shortcuts-item col">
-                                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-                                                    <i class="ti ti-users fs-4"></i>
-                                                </span>
-                                                <a href="app-user-list.html" class="stretched-link">User App</a>
-                                                <small class="text-muted mb-0">Manage Users</small>
-                                            </div>
-                                            <div class="dropdown-shortcuts-item col">
-                                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-                                                    <i class="ti ti-lock fs-4"></i>
-                                                </span>
-                                                <a href="app-access-roles.html" class="stretched-link">Role
-                                                    Management</a>
-                                                <small class="text-muted mb-0">Permission</small>
-                                            </div>
-                                        </div>
-                                        <div class="row row-bordered overflow-visible g-0">
-                                            <div class="dropdown-shortcuts-item col">
-                                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-                                                    <i class="ti ti-chart-bar fs-4"></i>
-                                                </span>
-                                                <a href="index.html" class="stretched-link">Dashboard</a>
-                                                <small class="text-muted mb-0">User Profile</small>
-                                            </div>
-                                            <div class="dropdown-shortcuts-item col">
-                                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-                                                    <i class="ti ti-settings fs-4"></i>
-                                                </span>
-                                                <a href="pages-account-settings-account.html"
-                                                    class="stretched-link">Setting</a>
-                                                <small class="text-muted mb-0">Account Settings</small>
-                                            </div>
-                                        </div>
-                                        <div class="row row-bordered overflow-visible g-0">
-                                            <div class="dropdown-shortcuts-item col">
-                                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-                                                    <i class="ti ti-help fs-4"></i>
-                                                </span>
-                                                <a href="pages-help-center-landing.html" class="stretched-link">Help
-                                                    Center</a>
-                                                <small class="text-muted mb-0">FAQs & Articles</small>
-                                            </div>
-                                            <div class="dropdown-shortcuts-item col">
-                                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-                                                    <i class="ti ti-square fs-4"></i>
-                                                </span>
-                                                <a href="modal-examples.html" class="stretched-link">Modals</a>
-                                                <small class="text-muted mb-0">Useful Popups</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <!-- Quick links -->
 
                             <!-- User -->
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
@@ -321,7 +247,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
-                                        <a class="dropdown-item" href="pages-account-settings-account.html">
+                                        <a class="dropdown-item" href="<?= base_url('dashboard_c/profile_view'); ?>">
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
@@ -333,7 +259,7 @@
                                                 <div class="flex-grow-1">
                                                     <span
                                                         class="fw-semibold d-block"><?= $session['first-name'] . ' ' . $session['last-name'] ?></span>
-                                                    <small class="text-muted">Admin</small>
+                                                    <small class="text-muted">User</small>
                                                 </div>
                                             </div>
                                         </a>
@@ -342,53 +268,46 @@
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="pages-profile-user.html">
+                                        <a class="dropdown-item" href="<?= base_url('dashboard_c/home_view'); ?>">
+                                            <i class="ti ti-smart-home me-2 ti-sm"></i>
+                                            <span class="align-middle">Dashboard</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="<?= base_url('dashboard_c/kanban_view'); ?>">
+                                            <i class="ti ti-layout-kanban me-2 ti-sm"></i>
+                                            <span class="align-middle">Kanban</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="<?= base_url('dashboard_c/profile_view'); ?>">
                                             <i class="ti ti-user-check me-2 ti-sm"></i>
                                             <span class="align-middle">My Profile</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="pages-account-settings-account.html">
+                                        <a class="dropdown-item"
+                                            href="<?= base_url('dashboard_c/account_settings_view'); ?>">
                                             <i class="ti ti-settings me-2 ti-sm"></i>
-                                            <span class="align-middle">Settings</span>
+                                            <span class="align-middle">Account</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="pages-account-settings-billing.html">
-                                            <span class="d-flex align-items-center align-middle">
-                                                <i class="flex-shrink-0 ti ti-credit-card me-2 ti-sm"></i>
-                                                <span class="flex-grow-1 align-middle">Billing</span>
-                                                <span
-                                                    class="flex-shrink-0 badge badge-center rounded-pill bg-label-danger w-px-20 h-px-20">2</span>
-                                            </span>
+                                        <a class="dropdown-item"
+                                            href="<?= base_url('dashboard_c/account_security_view'); ?>">
+                                            <i class="ti ti-lock me-2 ti-sm"></i>
+                                            <span class="align-middle">Security</span>
                                         </a>
                                     </li>
+
                                     <li>
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="pages-help-center-landing.html">
-                                            <i class="ti ti-lifebuoy me-2 ti-sm"></i>
-                                            <span class="align-middle">Help</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="pages-faq.html">
-                                            <i class="ti ti-help me-2 ti-sm"></i>
-                                            <span class="align-middle">FAQ</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="pages-pricing.html">
-                                            <i class="ti ti-currency-dollar me-2 ti-sm"></i>
-                                            <span class="align-middle">Pricing</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown-divider"></div>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="auth-login-cover.html" target="_blank">
+                                        <a class="dropdown-item" href="<?= base_url('dashboard_c/logout'); ?>">
                                             <i class="ti ti-logout me-2 ti-sm"></i>
                                             <span class="align-middle">Log Out</span>
                                         </a>
