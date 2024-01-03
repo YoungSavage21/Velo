@@ -37,19 +37,10 @@
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="<?= base_url('assets'); ?>/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-    <link rel="stylesheet" href="<?= base_url('assets'); ?>/vendor/libs/node-waves/node-waves.css" />
-    <link rel="stylesheet" href="<?= base_url('assets'); ?>/vendor/libs/typeahead-js/typeahead.css" />
-    <link rel="stylesheet" href="<?= base_url('assets'); ?>/vendor/libs/apex-charts/apex-charts.css" />
-    <link rel="stylesheet" href="<?= base_url('assets'); ?>/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
-    <link rel="stylesheet"
-        href="<?= base_url('assets'); ?>/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
-    <link rel="stylesheet"
-        href="<?= base_url('assets'); ?>/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css" />
-    <link rel="stylesheet" href="<?= base_url('assets'); ?>/vendor/libs/spinkit/spinkit.css" />
-    <link rel="stylesheet" href="<?= base_url('assets'); ?>/vendor/libs/jkanban/jkanban.css" />
     <link rel="stylesheet" href="<?= base_url('assets'); ?>/vendor/libs/select2/select2.css " />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.6.6/dragula.css" />
     <link rel="stylesheet" href="<?= base_url('assets'); ?>/vendor/libs/cropperjs/cropper.css " />
+    <link rel="stylesheet" href="<?= base_url('assets'); ?>/vendor/libs/jkanban/jkanban.css" />
 
 
     <!-- Page CSS -->
@@ -77,7 +68,7 @@
 
             <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
                 <div class="app-brand demo">
-                    <a href="index.html" class="app-brand-link">
+                    <a href="<?= base_url('dashboard_c/home_view'); ?>" class="app-brand-link">
                         <span class="app-brand-logo demo">
                             <svg width="32" height="22" viewBox="0 0 32 22" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -95,7 +86,7 @@
                                     fill="#7367F0" />
                             </svg>
                         </span>
-                        <span class="app-brand-text demo menu-text fw-bold">Vuexy</span>
+                        <span class="app-brand-text demo menu-text fw-bold">Velo</span>
                     </a>
 
                     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
@@ -117,13 +108,13 @@
                             <div>Dashboard</div>
                         </a>
                     </li>
-                    <li
+                    <!-- <li
                         class="menu-item <?php if ($_SERVER['REQUEST_URI'] == '/project-baby/dashboard_c/board_view') {echo 'active';} ?>">
                         <a href="<?= base_url('dashboard_c/board_view'); ?>" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-checklist"></i>
                             <div>Tasks</div>
                         </a>
-                    </li>
+                    </li> -->
                     <li
                         class="menu-item <?php if ($_SERVER['REQUEST_URI'] == '/project-baby/dashboard_c/kanban_view') {echo 'active';} ?>">
                         <a href="<?= base_url('dashboard_c/kanban_view'); ?>" class="menu-link">
@@ -143,6 +134,13 @@
                         <a href="<?= base_url('dashboard_c/account_settings_view'); ?>" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-settings"></i>
                             <div data-i18n="Account">Account</div>
+                        </a>
+                    </li>
+                    <li
+                        class="menu-item <?php if ($_SERVER['REQUEST_URI'] == '/project-baby/dashboard_c/account_security_view') {echo 'active';} ?>">
+                        <a href="<?= base_url('dashboard_c/account_security_view'); ?>" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-lock"></i>
+                            <div data-i18n="Security">Security</div>
                         </a>
                     </li>
                     <li class="menu-item">
@@ -442,27 +440,20 @@
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="<?= base_url('assets'); ?>/vendor/libs/jquery/jquery.js"></script>
-    <script src="<?= base_url('assets'); ?>/vendor/libs/popper/popper.js"></script>
-    <script src="<?= base_url('assets'); ?>/vendor/js/bootstrap.js"></script>
-    <script src="<?= base_url('assets'); ?>/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="<?= base_url('assets'); ?>/vendor/libs/node-waves/node-waves.js"></script>
-
-    <script src="<?= base_url('assets'); ?>/vendor/libs/hammer/hammer.js"></script>
-    <script src="<?= base_url('assets'); ?>/vendor/libs/i18n/i18n.js"></script>
-    <script src="<?= base_url('assets'); ?>/vendor/libs/typeahead-js/typeahead.js"></script>
 
     <script src="<?= base_url('assets'); ?>/vendor/js/menu.js"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
-    <script src="<?= base_url('assets'); ?>/vendor/libs/apex-charts/apexcharts.js"></script>
-    <script src="<?= base_url('assets'); ?>/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
-    <script src="<?= base_url('assets'); ?>/vendor/libs/block-ui/block-ui.js"></script>
-    <script src="<?= base_url('assets'); ?>/vendor/libs/sortablejs/sortable.js"></script>
-    <script src="<?= base_url('assets'); ?>/vendor/libs/select2/select2.js"></script>
+
+    <script src="<?= base_url('assets'); ?>/vendor/libs/jquery/jquery.js"></script>
+    <script src="<?= base_url('assets'); ?>/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/dragula/3.6.6/dragula.min.js'></script>
     <script src="<?= base_url('assets'); ?>/vendor/libs/cropperjs/cropper.js"></script>
+    <script src="<?= base_url('assets'); ?>/vendor/libs/select2/select2.js"></script>
+    <script src="<?= base_url('assets'); ?>/vendor/js/bootstrap.js"></script>
+    <script src="<?= base_url('assets'); ?>/vendor/libs/popper/popper.js"></script>
+
 
     <!-- Main JS -->
     <script src="<?= base_url('assets'); ?>/js/main.js"></script>

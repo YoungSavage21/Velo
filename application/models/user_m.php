@@ -167,6 +167,7 @@ class User_m extends CI_Model {
         $data = [
             'new' => 0,
             'progress' => 0,
+            'review' => 0,
             'completed' => 0,
         ];
         
@@ -183,11 +184,16 @@ class User_m extends CI_Model {
                     $data['progress'] = $count;
                     break;
                 case 2:
+                    $data['review'] = $count;
+                    break;
+                case 3:
                     $data['completed'] = $count;
                     break;
             }
         }
-        
+        $total = array_sum($data);
+        $data['total'] = $total;
+        $data['uncompleted'] = $total - $data['completed'];
         return $data;
     }
 }

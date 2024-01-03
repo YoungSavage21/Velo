@@ -42,14 +42,9 @@ class Register_c extends CI_Controller
 
         if ($this->form_validation->run() == FALSE)
         {
-            $data = [
-                'title' => 'Register Page',
-                'content' => $this->register_page,
-            ];
-
-        $this->load->view($this->template, $data);
-
-        }else {
+            $this->register_view();
+        }
+        else {
             $data = [
                 'CHR_FIRST_NAME' => $this->input->post('first-name'),
                 'CHR_LAST_NAME' => $this->input->post('last-name'),

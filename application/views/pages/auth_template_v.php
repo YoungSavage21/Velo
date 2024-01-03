@@ -36,8 +36,6 @@
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="<?= base_url('assets/'); ?>vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-    <link rel="stylesheet" href="<?= base_url('assets/'); ?>vendor/libs/node-waves/node-waves.css" />
-    <link rel="stylesheet" href="<?= base_url('assets/'); ?>vendor/libs/typeahead-js/typeahead.css" />
     <!-- Vendor -->
     <link rel="stylesheet"
         href="<?= base_url('assets/'); ?>vendor/libs/formvalidation/dist/css/formValidation.min.css" />
@@ -65,20 +63,14 @@
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <script src="<?= base_url('assets/'); ?>vendor/libs/jquery/jquery.js"></script>
-    <script src="<?= base_url('assets/'); ?>vendor/libs/popper/popper.js"></script>
     <script src="<?= base_url('assets/'); ?>vendor/js/bootstrap.js"></script>
     <script src="<?= base_url('assets/'); ?>vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="<?= base_url('assets/'); ?>vendor/libs/node-waves/node-waves.js"></script>
-
-    <script src="<?= base_url('assets/'); ?>vendor/libs/hammer/hammer.js"></script>
-    <script src="<?= base_url('assets/'); ?>vendor/libs/i18n/i18n.js"></script>
-    <script src="<?= base_url('assets/'); ?>vendor/libs/typeahead-js/typeahead.js"></script>
 
     <script src="<?= base_url('assets/'); ?>vendor/js/menu.js"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
-    <script src="<?= base_url('assets/'); ?>vendor/libs/formvalidation/dist/js/FormValidation.min.js"></script>
+    <!-- <script src="<?= base_url('assets/'); ?>vendor/libs/formvalidation/dist/js/FormValidation.min.js"></script> -->
     <script src="<?= base_url('assets/'); ?>vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
     <script src="<?= base_url('assets/'); ?>vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
 

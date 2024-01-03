@@ -5,6 +5,7 @@ class Login_c extends CI_Controller
 {
     private $template = 'pages/auth_template_v';
     private $login_page = 'pages/login_v';
+    private $forgot_password_page = 'pages/forgot_password_v';
 
     function __construct(){
         parent::__construct();
@@ -64,11 +65,62 @@ class Login_c extends CI_Controller
                     break;
             }
         }
+        $this->login_view();
+    }
+
+    function forgot_password_view()
+    {     
         $data = [
-            'title' => 'Login Page',
-            'content' => $this->login_page,
+            'title' => 'Forgot Password Page',
+            'content' => $this->forgot_password_page,
         ];
+
         $this->load->view($this->template, $data);
+    }
+
+    function change_password()  
+    {
+        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email', [
+            'valid_email' => 'Please enter a valid email address'
+        ]);
+        
+        if ($this->form_validation->run() == FALSE) {
+            $this->forgot_password_view();
+        } else {
+            $email = $this->input->post('email');
+            $this->send_email($email);
+        }
+        var_dump($email);die;
+        redirect('login_c/login_view');
+    }
+
+    private function send_email($email)
+    {
+        $config = json_decode(file_get_contents(FCPATH . 'application/controllers/config.json' ), true);
+        $config = [
+            'protocol' => 'smtp',
+            'smtp_host' => 'smtp.googlemail.com',
+            'smtp_user' => 'gilangp.nurdiansyah@gmail.com',
+            'smtp_pass' => $config['smtp_pass'],
+            'smtp_port' => 465,
+            'mail_type' => 'html',
+            'charset' => 'utf-8',
+            'newline' => "\r\n",
+        ];
+
+        $this->load->library('email', $config);
+        $this->email->initialize($config); 
+        
+        $this->email->from('gilangp.nurdiansyah@gmail.com', 'Velo');
+        $this->email->to($email);
+        $this->email->subject('Testing');
+        $this->email->message('Hello World');
+        if ($this->email->send()) {
+            return true;
+        } else {
+            var_dump($this->email->print_debugger());die;
+        }
+
     }
 
     function logout()

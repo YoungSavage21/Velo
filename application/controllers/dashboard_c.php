@@ -24,10 +24,12 @@ class Dashboard_c extends CI_Controller
 
     public function home_view()
     {
+        $session = $this->session->userdata('user_session');
         $data = [
             'title' => 'Home Page',
             'content' => $this->home_page,
             'session' => $this->session->userdata('user_session'),
+            'tasks_status_count' => $this->user_m->get_tasks_status_count($session['user-id']),
         ];
         $this->load->view($this->template, $data);
     }

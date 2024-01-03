@@ -283,9 +283,6 @@
                                     </a>
                                 </div>
                             </div>
-                            <button class="kanban-title-button btn" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasEnd" onclick="status_code(3)">+ Add New Item</button>
-
                         </header>
                         <main class="kanban-drag" id="3">
                             <?php foreach ($tasks as $t): ?>
@@ -345,7 +342,7 @@
                         </main>
                     </div>
 
-                    <form class="kanban-add-new-board">
+                    <!-- <form class="kanban-add-new-board">
                         <label class="kanban-add-board-btn" for="kanban-add-board-input">
                             <i class="ti ti-plus ti-xs"></i>
                             <span class="align-middle">Add new</span>
@@ -357,7 +354,7 @@
                             <button type="button"
                                 class="btn btn-label-secondary btn-sm kanban-add-board-cancel-btn waves-effect">Cancel</button>
                         </div>
-                    </form>
+                    </form> -->
                 </div>
             </div>
         </div>
