@@ -7,7 +7,7 @@
                     <div class="col-7">
                         <div class="card-body text-nowrap">
                             <h5 class="card-title mb-0">Welcome <?= $session['first-name']; ?>! 🌟</h5>
-                            <p class="mb-3">Your adventure begins now. Enjoy the ride!"</p>
+                            <p class="mb-3">Your adventure begins now. Enjoy the ride!</p>
                             <h4 class="text-primary mb-1"></h4>
                             <a href="<?= base_url('/dashboard_c/kanban_view'); ?>" class="btn btn-primary">View
                                 Board</a>
@@ -43,7 +43,7 @@
                                     <h5 class="mb-0">
                                         <?= $tasks_status_count['uncompleted'] . ' task' . ($tasks_status_count['uncompleted'] > 1 ? 's' : ''); ?>
                                     </h5>
-                                    <small>Uncompleted</small>
+                                    <small>Unfinished</small>
                                 </div>
                             </div>
                         </div>
