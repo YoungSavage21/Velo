@@ -28,5 +28,16 @@ To run Velo on your local machine, follow these steps:
 - **`assets`**: The assets folder holds static files such as stylesheets, JavaScript files, and images.
 
 - **`database`**: This folder includes the SQL script to create the necessary tables for the MySQL database.
+  
+![image](https://github.com/YoungSavage21/Velo/assets/128630865/89c8a6f6-3d21-49fc-afaf-b0a93478c4da)
+![image](https://github.com/YoungSavage21/Velo/assets/128630865/c5e062f8-20be-4b39-86e9-9a4513c42a8b)
+![image](https://github.com/YoungSavage21/Velo/assets/128630865/ae7a2221-0577-4743-93c9-920671df9618)
+![image](https://github.com/YoungSavage21/Velo/assets/128630865/8f54e356-704b-4fc0-a2d5-542656a1b1c2)
+![image](https://github.com/YoungSavage21/Velo/assets/128630865/681a6e4e-3ce1-463d-a959-61c70192418d)
+![image](https://github.com/YoungSavage21/Velo/assets/128630865/3b1fb449-0af4-41a6-a729-d9e3402b9413)
 
-- **`config`**: Configuration files for CodeIgniter and other settings.
+
+
+
+
+
