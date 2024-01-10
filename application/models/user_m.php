@@ -74,9 +74,10 @@ class User_m extends CI_Model {
         ->get()
         ->row();
 
+
         if ($query->INT_USER_ID == $user_id) {
-            return 0;
             $this->db->delete($this->tt_task, ['INT_TASK_ID' => $task_id]);
+            return 0;
         } else {
             return 1;
         }

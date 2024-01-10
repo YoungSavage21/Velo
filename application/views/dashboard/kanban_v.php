@@ -341,24 +341,12 @@
                             <?php endforeach; ?>
                         </main>
                     </div>
-
-                    <!-- <form class="kanban-add-new-board">
-                        <label class="kanban-add-board-btn" for="kanban-add-board-input">
-                            <i class="ti ti-plus ti-xs"></i>
-                            <span class="align-middle">Add new</span>
-                        </label>
-                        <input type="text" class="form-control w-px-250 kanban-add-board-input mb-2 d-none"
-                            placeholder="Add Board Title" id="kanban-add-board-input" required="">
-                        <div class="mb-3 kanban-add-board-input d-none">
-                            <button class="btn btn-primary btn-sm me-2 waves-effect waves-light">Add</button>
-                            <button type="button"
-                                class="btn btn-label-secondary btn-sm kanban-add-board-cancel-btn waves-effect">Cancel</button>
-                        </div>
-                    </form> -->
                 </div>
+                <input type="text" id="username" class="form-control" placeholder="Username">
             </div>
         </div>
     </div>
+
 </div>
 <!-- Offcanvas Add New Item -->
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEnd" aria-labelledby="offcanvasEndLabel">
@@ -421,7 +409,6 @@
                                         <label class="form-label fw-light mb-2">
                                             Add Member
                                         </label>
-                                        <input type="text" id="username" class="form-control" placeholder="Username">
                                     </div>
                                     <button type="button" onclick="add_member()"
                                         class="btn btn-primary py-2 px-3x w-75 m-auto align-content-center">Add</button>
@@ -553,13 +540,7 @@
                     id="view-image">
                 <div class="mt-2 ms-2">
                     <h3 class="mb-3" id="view-title">Enable One Time Password</h3>
-                    <p class="mt-2" id="view-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora
-                        ex,
-                        accusantium
-                        eius
-                        quod voluptate
-                        vero sunt mollitia unde corrupti reiciendis beatae id cumque sit ipsa nisi. Aperiam quidem fugit
-                        adipisci?</p>
+                    <p class="mt-2" id="view-desc"></p>
                 </div>
             </div>
 

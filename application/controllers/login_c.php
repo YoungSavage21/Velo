@@ -90,7 +90,6 @@ class Login_c extends CI_Controller
             $email = $this->input->post('email');
             $this->send_email($email);
         }
-        var_dump($email);die;
         redirect('login_c/login_view');
     }
 

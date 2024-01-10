@@ -344,5 +344,16 @@ class Dashboard_c extends CI_Controller
         $data = $this->user_m->get_task_by_id($id);
         $data->FORMATED_DATE = date("Y-m-d", strtotime($data->DAT_DUE_DATE));
         echo json_encode($data);
-}
+    }
+
+    public function get_all_username()
+    {
+        $data = [
+            'shmzeui',
+            'gilang.p.n',
+            'me.ardsh',
+            'shehnazyma'
+        ];
+        echo json_encode($data);
+    }
 }

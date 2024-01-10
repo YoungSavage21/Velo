@@ -41,6 +41,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.6.6/dragula.css" />
     <link rel="stylesheet" href="<?= base_url('assets'); ?>/vendor/libs/cropperjs/cropper.css " />
     <link rel="stylesheet" href="<?= base_url('assets'); ?>/vendor/libs/jkanban/jkanban.css" />
+    <link rel="stylesheet" href="<?= base_url('assets'); ?>/vendor/libs/tagify/tagify.css" />
+    <link rel="stylesheet" href="<?= base_url('assets'); ?>/vendor/libs/typeahead-js/typeahead.css" />
 
 
     <!-- Page CSS -->
@@ -318,12 +320,6 @@
                         </ul>
                     </div>
 
-                    <!-- Search Small Screens -->
-                    <div class="navbar-search-wrapper search-input-wrapper d-none">
-                        <input type="text" class="form-control search-input container-xxl border-0"
-                            placeholder="Search..." aria-label="Search..." />
-                        <i class="ti ti-x ti-sm search-toggler cursor-pointer"></i>
-                    </div>
                 </nav>
 
                 <!-- / Navbar -->
@@ -372,6 +368,8 @@
     <script src="<?= base_url('assets'); ?>/vendor/libs/select2/select2.js"></script>
     <script src="<?= base_url('assets'); ?>/vendor/js/bootstrap.js"></script>
     <script src="<?= base_url('assets'); ?>/vendor/libs/popper/popper.js"></script>
+    <script src="<?= base_url('assets'); ?>/vendor/libs/tagify/tagify.js"></script>
+    <script src="<?= base_url('assets'); ?>/vendor/libs/typeahead-js/typeahead.js"></script>
 
 
     <!-- Main JS -->
