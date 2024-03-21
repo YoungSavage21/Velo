@@ -21,6 +21,8 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="app-kanban">
             <!-- Kanban Wrapper -->
+            <!-- <input type="text" id="username" class="form-control" placeholder="Username"> -->
+
             <div class="kanban-wrapper ps pb-5" style="height: calc(100vh - 8.5rem);">
                 <?php $alert = $this->session->flashdata('alert') ?>
                 <?php if ($alert):?>
@@ -34,7 +36,7 @@
                     <div class="kanban-board" style="width: 250px; margin-left: 15px; margin-right: 15px;">
                         <header class="kanban-board-header">
                             <div class="kanban-title-board">New</div>
-                            <div class="dropdown"><i class="dropdown-toggle ti ti-dots-vertical cursor-pointer"
+                            <!-- <div class="dropdown"><i class="dropdown-toggle ti ti-dots-vertical cursor-pointer"
                                     id="board-dropdown" data-bs-toggle="dropdown"></i>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <a class="dropdown-item delete-board" href="javascript:void(0)">
@@ -45,7 +47,7 @@
                                         href="javascript:void(0)"><i class="ti ti-archive ti-xs" me-1=""></i>
                                         <span class="align-middle">Archive</span></a>
                                 </div>
-                            </div>
+                            </div> -->
                             <button class="kanban-title-button btn" data-bs-toggle="offcanvas"
                                 data-bs-target="#offcanvasEnd" onclick="status_code(0)">+ Add New Item</button>
 
@@ -112,7 +114,7 @@
                         style="width: 250px; margin-left: 15px; margin-right: 15px;">
                         <header class="kanban-board-header">
                             <div class="kanban-title-board">In Progress</div>
-                            <div class="dropdown"><i class="dropdown-toggle ti ti-dots-vertical cursor-pointer"
+                            <!-- <div class="dropdown"><i class="dropdown-toggle ti ti-dots-vertical cursor-pointer"
                                     id="board-dropdown" data-bs-toggle="dropdown"></i>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <a class="dropdown-item delete-board" href="javascript:void(0)">
@@ -123,7 +125,8 @@
                                         href="javascript:void(0)"><i class="ti ti-archive ti-xs" me-1=""></i>
                                         <span class="align-middle">Archive</span></a>
                                 </div>
-                            </div><button class="kanban-title-button btn" data-bs-toggle="offcanvas"
+                            </div>-->
+                            <button class="kanban-title-button btn" data-bs-toggle="offcanvas"
                                 data-bs-target="#offcanvasEnd" onclick="status_code(1)">+ Add New Item</button>
                         </header>
                         <main class="kanban-drag" id="1">
@@ -188,7 +191,7 @@
                         style="width: 250px; margin-left: 15px; margin-right: 15px;">
                         <header class="kanban-board-header">
                             <div class="kanban-title-board">In Review</div>
-                            <div class="dropdown"><i class="dropdown-toggle ti ti-dots-vertical cursor-pointer"
+                            <!-- <div class="dropdown"><i class="dropdown-toggle ti ti-dots-vertical cursor-pointer"
                                     id="board-dropdown" data-bs-toggle="dropdown"></i>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <a class="dropdown-item delete-board" href="javascript:void(0)">
@@ -199,7 +202,7 @@
                                         href="javascript:void(0)"><i class="ti ti-archive ti-xs" me-1=""></i>
                                         <span class="align-middle">Archive</span></a>
                                 </div>
-                            </div>
+                            </div> -->
                             <button class="kanban-title-button btn" data-bs-toggle="offcanvas"
                                 data-bs-target="#offcanvasEnd" onclick="status_code(2)">+ Add New Item</button>
 
@@ -266,7 +269,7 @@
                         style="width: 250px; margin-left: 15px; margin-right: 15px;">
                         <header class="kanban-board-header">
                             <div class="kanban-title-board">Completed</div>
-                            <div class="dropdown"><i class="dropdown-toggle ti ti-dots-vertical cursor-pointer"
+                            <!-- <div class="dropdown"><i class="dropdown-toggle ti ti-dots-vertical cursor-pointer"
                                     id="board-dropdown" data-bs-toggle="dropdown"></i>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <a class="dropdown-item delete-board" href="">
@@ -282,7 +285,7 @@
                                         <span class="align-middle">Archive</span>
                                     </a>
                                 </div>
-                            </div>
+                            </div> -->
                         </header>
                         <main class="kanban-drag" id="3">
                             <?php foreach ($tasks as $t): ?>
@@ -342,7 +345,6 @@
                         </main>
                     </div>
                 </div>
-                <input type="text" id="username" class="form-control" placeholder="Username">
             </div>
         </div>
     </div>
@@ -355,21 +357,27 @@
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body mb-auto mx-0 flex-grow-0">
-        <form action="<?= base_url('dashboard_c/add_task'); ?>" method="post" enctype="multipart/form-data">
+        <form id="add_form" action="<?= base_url('dashboard_c/add_task'); ?>" method="post"
+            enctype="multipart/form-data">
             <input type="hidden" id="CHR_STATUS" name="CHR_STATUS" value="">
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
                 <input type="text" id="title" class="form-control" placeholder="Name for your task" name="task-title">
+                <small class="text-danger ps-1 d-none" id="add_title_alert">Task title is required</small>
             </div>
             <div class="mb-3">
                 <label for="task-desc">Description</label>
                 <textarea class="form-control" id="task-desc" style="height: 100px" placeholder='What is it about?'
                     name="task-desc"></textarea>
+                <small class="text-danger ps-1 d-none" id="add_desc_alert">Task description is required</small>
+
             </div>
             <div class="mb-3">
                 <label for="task-category" class="form-label">Category</label>
                 <input type="text" id="task-category" class="form-control"
                     placeholder="E.g. Sports, Grocery, Health etc." name="task-category">
+                <small class="text-danger ps-1 d-none" id="add_category_alert">Task category is required</small>
+
             </div>
             <div class="mb-3">
                 <label for="task-tag" class="form-label">Tag</label>
@@ -387,6 +395,7 @@
                 <label class="form-label" for="due-date">Due Date</label>
                 <input class="form-control" type="datetime-local" value="<?= date("Y-m-d\TH:i"); ?>" name="due-date" />
             </div>
+
             <div class="mb-3">
                 <label class="form-label">Assigned</label>
                 <div class="assigned d-flex flex-wrap mb-1" id="assigned_wrapper">
@@ -400,18 +409,22 @@
 
                     <div class="avatar avatar-xs ms-1" id="assigned_add">
                         <span class="avatar-initial rounded-circle bg-label-secondary dropup">
-                            <a data-bs-toggle="dropdown">
+                            <a data-bs-toggle="dropdown" class="dropdown" data-bs-auto-close="outside">
                                 <i class="ti ti-plus ti-xs text-heading"></i>
                             </a>
-                            <div class="dropdown-menu" style="width: 200px;">
+                            <div class="dropdown-menu" style="width: 300px;">
                                 <div class="px-4 py-3 d-flex flex-column">
                                     <div class="mb-3">
                                         <label class="form-label fw-light mb-2">
                                             Add Member
                                         </label>
+                                        <span class="text-lowercase">
+                                            <input type="text" id="username" class="form-control typeahead"
+                                                placeholder="Username">
+                                        </span>
                                     </div>
                                     <button type="button" onclick="add_member()"
-                                        class="btn btn-primary py-2 px-3x w-75 m-auto align-content-center">Add</button>
+                                        class="btn btn-primary py-2 px-3x w-50 m-auto align-content-center">Add</button>
                                 </div>
                             </div>
                         </span>
@@ -425,7 +438,7 @@
                 <input type="file" class="form-control" id="attachments" name="image" />
             </div>
             <div class="d-flex flex-wrap">
-                <button type="submit" class="btn btn-primary me-3" data-bs-dismiss="offcanvas">
+                <button type="button" onclick="add_validation()" class="btn btn-primary me-3">
                     Add
                 </button>
                 <button type="button" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
@@ -443,23 +456,30 @@
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body mb-auto mx-0 flex-grow-0">
-        <form action="<?= base_url('dashboard_c/edit_task'); ?>" method="post" enctype="multipart/form-data">
+        <form id="edit_form" action="<?= base_url('dashboard_c/edit_task'); ?>" method="post"
+            enctype="multipart/form-data">
             <input type="hidden" name="CHR_STATUS" value="" id="edit-status">
             <input type="hidden" name="INT_TASK_ID" value="" id="edit-id">
             <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
+                <label for="edit-title" class="form-label">Title</label>
                 <input type="text" id="edit-title" class="form-control" placeholder="Name for your task"
                     name="task-title">
+                <small class="text-danger ps-1 d-none" id="edit_title_alert">Task title is required</small>
+
             </div>
             <div class="mb-3">
-                <label for="task-desc">Description</label>
+                <label for="edit-desc">Description</label>
                 <textarea class="form-control" id="edit-desc" style="height: 100px" placeholder='What is it about?'
                     name="task-desc"></textarea>
+                <small class="text-danger ps-1 d-none" id="edit_desc_alert">Task title is required</small>
+
             </div>
             <div class="mb-3">
-                <label for="task-category" class="form-label">Category</label>
+                <label for="edit-category" class="form-label">Category</label>
                 <input type="text" id="edit-category" class="form-control"
                     placeholder="E.g. Sports, Grocery, Health etc." name="task-category">
+                <small class="text-danger ps-1 d-none" id="edit_category_alert">Task title is required</small>
+
             </div>
             <div class="mb-3">
                 <label for="task-tag" class="form-label">Tag</label>
@@ -490,20 +510,22 @@
 
                     <div class="avatar avatar-xs ms-1" id="assigned_edit">
                         <span class="avatar-initial rounded-circle bg-label-secondary dropup">
-                            <a data-bs-toggle="dropdown">
+                            <a data-bs-toggle="dropdown" class="dropdown" data-bs-auto-close="outside">
                                 <i class="ti ti-plus ti-xs text-heading"></i>
                             </a>
-                            <div class="dropdown-menu" style="width: 200px;">
+                            <div class="dropdown-menu" style="width: 300px;">
                                 <div class="px-4 py-3 d-flex flex-column">
                                     <div class="mb-3">
                                         <label class="form-label fw-light mb-2">
                                             Add Member
                                         </label>
-                                        <input type="text" id="username_edit" class="form-control"
-                                            placeholder="Username">
+                                        <span class="text-lowercase">
+                                            <input type="text" id="username_edit" class="form-control typeahead"
+                                                placeholder="Username">
+                                        </span>
                                     </div>
                                     <button type="button" onclick="add_member_for_edit()"
-                                        class="btn btn-primary py-2 px-3x w-75 m-auto align-content-center">Add</button>
+                                        class="btn btn-primary py-2 px-3x w-50 m-auto align-content-center">Add</button>
                                 </div>
                             </div>
                         </span>
@@ -517,7 +539,7 @@
                 <input type="file" class="form-control" id="attachments" name="image" />
             </div>
             <div class="d-flex flex-wrap">
-                <button type="submit" class="btn btn-primary me-3" data-bs-dismiss="offcanvas">
+                <button type="button" onclick="edit_validation()" class="btn btn-primary me-3">
                     Update
                 </button>
                 <button type="button" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">

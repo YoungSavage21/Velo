@@ -370,6 +370,8 @@
     <script src="<?= base_url('assets'); ?>/vendor/libs/popper/popper.js"></script>
     <script src="<?= base_url('assets'); ?>/vendor/libs/tagify/tagify.js"></script>
     <script src="<?= base_url('assets'); ?>/vendor/libs/typeahead-js/typeahead.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+
 
 
     <!-- Main JS -->

@@ -43,7 +43,7 @@
 
     <!-- User Profile Content -->
     <div class="row">
-        <div class="col-xl-12 col-lg-5 col-md-5">
+        <div class="col-xl-12">
             <!-- About User -->
             <div class="card mb-4">
                 <div class="row card-body">

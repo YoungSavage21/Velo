@@ -185,81 +185,39 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // INITIALIZE TYPEAHEAD
 
-    var substringMatcher = function(strs) {
-        return function findMatches(q, cb) {
-            var matches, substrRegex;
-            matches = [];
-            substrRegex = new RegExp(q, 'i');
-            $.each(strs, function(i, str) {
-                if (substrRegex.test(str)) {
-                    matches.push(str);
-                }
-            });
+    $('.typeahead').each(function() {
+        $(this).typeahead({
+            highlight: true,
+            minLength: 1
+        }, {
+            source: function(query, result) {
+                $.ajax({
+                    async: false,
+                    url: "<?php echo site_url('dashboard_c/get_all_username'); ?>",
+                    type: "POST",
+                    data: {
+                        query: query,
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        result($.map(data, function(item) {
+                            return item;
+                        }))
+                    }
+                }, )
+            },
+            templates: {
+                suggestion: Handlebars.compile(
+                    '<div><img style="width:20px; margin-right: 6px" src= "<?= base_url('assets'); ?>/img/avatars/{{CHR_PROFILE_PIC}}" alt="test" class="rounded-circle"> {{CHR_USERNAME}}  </div>'
+                )
+            },
+            display: function(item) {
+                return item.CHR_USERNAME;
+            },
 
-            cb(matches);
-        };
-    };
-
-    var states = [
-        'Alabama',
-        'Alaska',
-        'Arizona',
-        'Arkansas',
-        'California',
-        'Colorado',
-        'Connecticut',
-        'Delaware',
-        'Florida',
-        'Georgia',
-        'Hawaii',
-        'Idaho',
-        'Illinois',
-        'Indiana',
-        'Iowa',
-        'Kansas',
-        'Kentucky',
-        'Louisiana',
-        'Maine',
-        'Maryland',
-        'Massachusetts',
-        'Michigan',
-        'Minnesota',
-        'Mississippi',
-        'Missouri',
-        'Montana',
-        'Nebraska',
-        'Nevada',
-        'New Hampshire',
-        'New Jersey',
-        'New Mexico',
-        'New York',
-        'North Carolina',
-        'North Dakota',
-        'Ohio',
-        'Oklahoma',
-        'Oregon',
-        'Pennsylvania',
-        'Rhode Island',
-        'South Carolina',
-        'South Dakota',
-        'Tennessee',
-        'Texas',
-        'Utah',
-        'Vermont',
-        'Virginia',
-        'Washington',
-        'West Virginia',
-        'Wisconsin',
-        'Wyoming'
-    ];
-
-    $('#username').typeahead({
-        highlight: true,
-        minLength: 1
-    }, {
-        name: 'states',
-        source: substringMatcher(states)
+        });
     });
+
 
 });
 
@@ -270,12 +228,78 @@ function status_code(id) {
     hiddenInput.val(id);
 }
 
+function add_validation() {
+
+    var form = $("#add_form");
+    var valid = true;
+    var input = [{
+            element: $('#title').val(),
+            alert: $('#add_title_alert'),
+        },
+        {
+            element: $('#task-desc').val(),
+            alert: $('#add_desc_alert'),
+        },
+        {
+            element: $('#task-category').val(),
+            alert: $('#add_category_alert'),
+        },
+    ];
+
+    input.forEach(function(item) {
+        if (!item.element || item.element.trim() === '') {
+            item.alert.toggleClass('d-none', false);
+            valid = false;
+        } else {
+            item.alert.toggleClass('d-none', true);
+        }
+    });
+
+    if (valid) {
+        form.submit();
+    }
+}
+
+function edit_validation() {
+
+    var form = $("#edit_form");
+    var valid = true;
+    var input = [{
+            element: $('#edit-title').val(),
+            alert: $('#edit_title_alert'),
+        },
+        {
+            element: $('#edit-desc').val(),
+            alert: $('#edit_desc_alert'),
+        },
+        {
+            element: $('#edit-category').val(),
+            alert: $('#edit_category_alert'),
+        },
+    ];
+
+    input.forEach(function(item) {
+        if (!item.element || item.element.trim() === '') {
+            item.alert.toggleClass('d-none', false);
+            valid = false;
+        } else {
+            item.alert.toggleClass('d-none', true);
+        }
+    });
+
+    if (valid) {
+        form.submit();
+    }
+}
+
 function add_member() {
     var current = get_current_user();
     var value = $('#username').val();
     var assigned = $('#assigned_add');
+
     $('#username').val("");
 
+    assigned.find('.dropdown').dropdown('hide');
     $.ajax({
         async: false,
         url: "<?php echo site_url('dashboard_c/add_member'); ?>",
@@ -337,7 +361,7 @@ function add_member_for_edit() {
     var assigned = $('#assigned_edit');
     $('#username_edit').val("");
 
-
+    assigned.find('.dropdown').dropdown('hide');
     $.ajax({
         async: false,
         url: "<?php echo site_url('dashboard_c/add_member'); ?>",

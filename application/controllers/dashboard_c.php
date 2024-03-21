@@ -117,6 +117,7 @@ class Dashboard_c extends CI_Controller
 
     public function add_task()
     {
+        
         $data = [
             'CHR_TASK_TITLE' => $this->input->post('task-title'),
             'CHR_TASK_DESC' => $this->input->post('task-desc'),
@@ -348,12 +349,9 @@ class Dashboard_c extends CI_Controller
 
     public function get_all_username()
     {
-        $data = [
-            'shmzeui',
-            'gilang.p.n',
-            'me.ardsh',
-            'shehnazyma'
-        ];
+        $query = $this->input->post('query');
+        $data = $this->user_m->get_usernames_by_query($query);
+        
         echo json_encode($data);
     }
 }

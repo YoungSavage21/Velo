@@ -91,7 +91,7 @@
             </div>
             <!-- /Account -->
         </div>
-        <div class="card">
+        <!-- <div class="card">
             <h5 class="card-header">Delete Account</h5>
             <div class="card-body">
                 <div class="mb-3 col-12 mb-0">
@@ -114,9 +114,9 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> -->
 
-</div>
+    </div>
 </div>
 <div class="modal fade" id="cropModal" tabindex="-1" aria-labelledby="cropModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

@@ -197,5 +197,16 @@ class User_m extends CI_Model {
         $data['uncompleted'] = $total - $data['completed'];
         return $data;
     }
+
+    function get_usernames_by_query($query)
+    {
+        $data = $this->db->select('CHR_USERNAME, CHR_PROFILE_PIC')
+        ->from($this->tm_user)
+        ->like('CHR_USERNAME', $query)
+        ->get()
+        ->result_array();
+
+        return $data;
+    }
 }
     

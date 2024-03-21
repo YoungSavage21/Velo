@@ -53,7 +53,7 @@ class Register_c extends CI_Controller
                 'CHR_EMAIL' => $this->input->post('email'),
             ];
             $this->user_m->register_user($data);
-            $this->session->set_flashdata('message', 'You have successfully registered');
+            $this->session->set_flashdata('message_success', 'You have successfully registered');
             redirect('login_c/login_view');
         }
     }
